@@ -88,6 +88,17 @@ def get_activities():
     return activities
 
 
+@app.get("/activities/{activity_name}")
+def get_activity_details(activity_name: str):
+    """Get details of a specific activity, including participants"""
+    # Validate activity exists
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    
+    # Return activity details
+    return activities[activity_name]
+
+
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
     """Sign up a student for an activity"""
